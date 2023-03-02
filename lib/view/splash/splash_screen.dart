@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../base/custom_snackbar.dart';
-
+import '../bottom_navigation/home.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -39,18 +39,26 @@ class _SplashScreenState extends State<SplashScreen> {
         isNotConnected
             ? SizedBox()
             : _globalKey.currentState?.hideCurrentSnackBar();
-        showCustomSnackBar( isNotConnected ? getTranslated('no_connection', context) :
-        getTranslated('connected',context), context);
+        showCustomSnackBar(
+            isNotConnected
+                ? getTranslated('no_connection', context)
+                : getTranslated('connected', context),
+            context);
         if (!isNotConnected) {
-          _route();
+          // _route();
         }
       }
       _firstTime = false;
     });
 
     Provider.of<SplashProvider>(context, listen: false).initSharedData();
-
-    _route();
+    Provider.of<SplashProvider>(context, listen: false)
+        .initConfig()
+        .then((value) {
+      if (value == true) {
+        _route();
+      }
+    });
   }
 
   @override
@@ -61,23 +69,18 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _route() {
-
-            Timer(Duration(seconds: 3), () async {
-              // Navigator.pushNamedAndRemoveUntil(
-              //     context,
-              //     Routes.getLanguageRoute("1"),
-              //         (route) => false);
-
-
-            }
-            );
-
-
+    Timer(const Duration(seconds: 3), () async {
+      // Navigator.pushNamedAndRemoveUntil(
+      //     context, Routes.getMainRoute(), (route) => false);
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (BuildContext context) =>
+              HomeScreen(Provider.of<SplashProvider>(context, listen: false).configModel!)));
+    
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: ColorResources.COLOR_DARKPRIMARY,
       body: ScaffoldMessenger(
@@ -87,11 +90,13 @@ class _SplashScreenState extends State<SplashScreen> {
             return Padding(
               padding: EdgeInsets.all(5),
               child: Center(
-                child: Image.asset(Images.logo,fit: BoxFit.cover,),
+                child: Image.asset(
+                  Images.logo,
+                  fit: BoxFit.cover,
+                ),
               ),
             );
-          }
-          ),
+          }),
         ),
       ),
     );

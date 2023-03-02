@@ -6,9 +6,8 @@ class AppConstants {
   static const String APP_NAME = 'web viwer';
 
 
-  static const String BASE_URL = 'https://camelclub.maintenance.camelclub.gov.sa/app/';
-  static const String CONFIG_URI = '';
-  static const String CATEGORY_URI = 'api/CategoryComplanit';
+  static const String BASE_URL = 'https://positifmobile.com/flyweb/admin/';
+  static const String CONFIG_URI = 'api/settings/settings.php';
 
 
   // Shared Key

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:webview_flutter/data/datasource/remote/dio_connection//interceptor.dart';
+import 'package:webview_flutter/data/datasource/remote/dio_connection/interceptor.dart';
 import 'package:webview_flutter/utill/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

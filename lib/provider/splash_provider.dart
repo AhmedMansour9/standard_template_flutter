@@ -15,22 +15,19 @@ class SplashProvider extends ChangeNotifier {
   SplashProvider({required this.splashRepo, required this.sharedPreferences});
 
   ConfigModel? _configModel;
-  BaseUrls? _baseUrls;
   DateTime _currentTime = DateTime.now();
 
   ConfigModel? get configModel => _configModel;
 
-  BaseUrls? get baseUrls => _baseUrls;
 
   DateTime get currentTime => _currentTime;
 
-  Future<bool> initConfig(GlobalKey<ScaffoldMessengerState> globalKey) async {
+  Future<bool> initConfig() async {
     ApiResponse apiResponse = await splashRepo.getConfig();
     bool isSuccess;
     if (apiResponse.response != null &&
         apiResponse.response?.statusCode == 200) {
-      _configModel = ConfigModel.fromJson(apiResponse.response?.data);
-      _baseUrls = ConfigModel.fromJson(apiResponse.response?.data).baseUrls!;
+      _configModel = ConfigModel.fromJson(apiResponse.response?.data['data']);
       isSuccess = true;
       notifyListeners();
     } else {
